@@ -32,5 +32,5 @@ for db in ../tenant_db/*.db; do
 		-p"$ISUCON_DB_PASSWORD" \
 		--host "$ISUCON_DB_HOST" \
 		--port "$ISUCON_DB_PORT" \
-		"isuports_tenants" < ./import.sql
+		"isuports" < ./import.sql
 done
