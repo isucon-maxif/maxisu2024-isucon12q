@@ -10,7 +10,7 @@ CREATE TABLE competition (
   created_at BIGINT NOT NULL,
   updated_at BIGINT NOT NULL,
   INDEX idx_tenant_id (tenant_id),
-  INDEX idx_tenant_id_created_at (tenant_id, created_at DESC),
+  INDEX idx_tenant_id_created_at (tenant_id, created_at DESC)
 );
 
 CREATE TABLE player (
@@ -20,7 +20,7 @@ CREATE TABLE player (
   is_disqualified BOOLEAN NOT NULL,
   created_at BIGINT NOT NULL,
   updated_at BIGINT NOT NULL,
-  INDEX idx_tenant_id_created_at (tenant_id, created_at DESC),
+  INDEX idx_tenant_id_created_at (tenant_id, created_at DESC)
 );
 
 CREATE TABLE player_score (
@@ -33,5 +33,5 @@ CREATE TABLE player_score (
   created_at BIGINT NOT NULL,
   updated_at BIGINT NOT NULL,
   INDEX idx_tenant_id_competition_id (tenant_id, competition_id),
-  INDEX idx_tenant_id_competition_id_player_id_row_num (tenant_id, competition_id, player_id, row_num),
+  INDEX idx_tenant_id_competition_id_player_id_row_num (tenant_id, competition_id, player_id, row_num)
 );
