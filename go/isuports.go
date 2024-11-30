@@ -95,17 +95,6 @@ func createTenantDB(id int64) error {
 	if out, err := cmd.CombinedOutput(); err != nil {
 		return fmt.Errorf("failed to exec sqlite3 %s < %s, out=%s: %w", p, tenantDBSchemaFilePath, string(out), err)
 	}
-
-	// index 作成
-	db, err := connectToTenantDB(id)
-	if err != nil {
-		return fmt.Errorf("failed to connect tenant DB: %w", err)
-	}
-	defer db.Close()
-	db.Exec("CREATE INDEX idx_compe_tenantid_createdat ON competition (tenant_id, created_at DESC)")
-	// db.Exec("CREATE INDEX idx_player_tenantid_createdat ON player (tenant_id, created_at DESC)")
-	// db.Exec("CREATE INDEX idx_score_tenantid_compeid_playerid_rownum ON player_score (tenant_id, competition_id, player_id, row_num)")
-
 	return nil
 }
 
