@@ -1,7 +1,6 @@
 sqlite-trace.log
 *.pprof
 .env
-docker-compose-go.yml
 docker-compose-java.yml
 docker-compose-node.yml
 docker-compose-perl.yml
