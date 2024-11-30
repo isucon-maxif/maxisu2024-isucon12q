@@ -25,7 +25,7 @@ mysql -u"$ISUCON_DB_USER" \
 		-p"$ISUCON_DB_PASSWORD" \
 		--host "$ISUCON_DB_HOST" \
 		--port "$ISUCON_DB_PORT" \
-		-e "DROP DATABASE IF EXISTS isuports_tenants; CREATE DATABASE isuports_tenants; GRANT ALL ON isuports_tenants.* TO isucon@'%';"
+		"isuports" < ./tenant/10_schema.sql
 for db in ../tenant_db/*.db; do
 	./sqlite3_to_sql $db > ./import.sql
 	mysql -u"$ISUCON_DB_USER" \
