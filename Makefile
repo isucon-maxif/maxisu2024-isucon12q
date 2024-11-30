@@ -13,9 +13,8 @@ MYSQL_SLOW_LOG:=/var/log/mysql/mysql-slow.log
 MYSQL_CONF:=/etc/mysql
 
 APP:=/home/isucon/webapp/go
-APP_BINARY:=isucholar
 
-SERVICE:=isucholar.go.service
+SERVICE:=isuports.service
 
 PPROF_EXEC_PORT:=6060
 PPROF_WEBUI_PORT:=1080
@@ -96,5 +95,4 @@ mysql-conf-deploy:
 .PHONY: app-deploy
 app-deploy:
 	echo "app deploy"
-	cd $(APP) && go build -o $(APP_BINARY) *.go
 	sudo systemctl restart $(SERVICE)
