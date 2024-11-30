@@ -1607,6 +1607,40 @@ func initializeHandler(c echo.Context) error {
 	if err != nil {
 		return fmt.Errorf("error exec.Command: %s %e", string(out), err)
 	}
+	filepath.Walk(getEnv("ISUCON_TENANT_DB_DIR", "../tenant_db"), func(path string, info os.FileInfo, err error) error {
+		if info.IsDir() {
+			return nil
+		}
+		if filepath.Ext(path) != ".db" {
+			return nil
+		}
+		// database is lockedが出るので解除する
+		db, err := sql.Open("sqlite3", "file:"+path+"?_journal_mode=WAL")
+		if err != nil {
+			return fmt.Errorf("error sql.Open: %w", err)
+		}
+		defer db.Close()
+		db.Exec("PRAGMA journal_mode=WAL")
+		db.Exec("PRAGMA synchronous=NORMAL")
+		db.Exec("PRAGMA foreign_keys=ON")
+		db.Exec("PRAGMA cache_size=10000")
+		db.Exec("PRAGMA temp_store=MEMORY")
+		db.Exec("PRAGMA mmap_size=30000000000")
+		db.Exec("PRAGMA busy_timeout=10000")
+		db.Exec("PRAGMA read_uncommitted=OFF")
+		db.Exec("PRAGMA recursive_triggers=ON")
+		db.Exec("PRAGMA secure_delete=ON")
+		db.Exec("PRAGMA locking_mode=EXCLUSIVE")
+		db.Exec("PRAGMA auto_vacuum=FULL")
+		db.Exec("PRAGMA page_size=4096")
+		db.Exec("PRAGMA mmap_size=30000000000")
+		db.Exec("PRAGMA threads=4")
+		db.Exec("PRAGMA wal_autocheckpoint=1000")
+		db.Exec("PRAGMA wal_checkpoint(TRUNCATE)")
+
+		return nil
+	})
+
 	res := InitializeHandlerResult{
 		Lang: "go",
 	}
