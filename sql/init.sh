@@ -12,7 +12,7 @@ ISUCON_DB_NAME=${ISUCON_DB_NAME:-isuports}
 # MySQLを初期化
 mysql -u"$ISUCON_DB_USER" \
 		-p"$ISUCON_DB_PASSWORD" \
-		--host "$ISUCON_DB_HOST" \
+		--host "192.168.0.4" \
 		--port "$ISUCON_DB_PORT" \
 		"$ISUCON_DB_NAME" < init.sql
 
