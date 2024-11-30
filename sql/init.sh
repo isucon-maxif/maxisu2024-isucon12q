@@ -27,7 +27,7 @@ mysql -u"$ISUCON_DB_USER" \
 		--port "$ISUCON_DB_PORT" \
 		"isuports" < ./tenant/10_schema.sql
 for db in ../tenant_db/*.db; do
-	./sqlite3_to_sql $db > ./import.sql
+	./sqlite3-to-sql $db > ./import.sql
 	mysql -u"$ISUCON_DB_USER" \
 		-p"$ISUCON_DB_PASSWORD" \
 		--host "$ISUCON_DB_HOST" \
