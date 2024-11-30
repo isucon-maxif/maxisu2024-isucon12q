@@ -19,3 +19,12 @@ mysql -u"$ISUCON_DB_USER" \
 # SQLiteのデータベースを初期化
 rm -f ../tenant_db/*.db
 cp -r ../../initial_data/*.db ../tenant_db/
+
+# SQLite のデータベースに接続して index 作成
+for db in ../tenant_db/*.db; do
+	sqlite3 $db <<EOF
+CREATE INDEX idx_compe_tenantid_createdat ON competition (tenant_id, created_at DESC);
+CREATE INDEX idx_player_tenantid_createdat ON player (tenant_id, created_at DESC);
+CREATE INDEX idx_score_tenantid_compeid_playerid_rownum ON player_score (tenant_id, competition_id, player_id, row_num);
+EOF
+done
